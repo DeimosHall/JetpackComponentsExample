@@ -38,10 +38,21 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    MyProgressBar()
+                    MySwitch()
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    JetpackComponentsExampleTheme {
+        //MyButtonsExample()
+        //MyImage()
+        //MyIcon()
+        MyProgressBar()
     }
 }
 
@@ -61,6 +72,20 @@ fun MyText() {
         MyTextFieldAdvanced()
         MyTextFieldOutlined()
     }
+}
+
+@Composable
+fun MyTextFieldAdvanced() {
+    var myTextField by rememberSaveable { mutableStateOf("") }
+    TextField(value = myTextField,
+        onValueChange = { myTextField = it.toUpperCase() },
+        label = { Text(text = "This is the hint") })
+}
+
+@Composable
+fun MyTextField() {
+    var myTextField by rememberSaveable { mutableStateOf("") }
+    TextField(value = myTextField, onValueChange = { myTextField = it })
 }
 
 @Composable
@@ -117,20 +142,6 @@ fun MyButtonsExample() {
 }
 
 @Composable
-fun MyTextFieldAdvanced() {
-    var myTextField by rememberSaveable { mutableStateOf("") }
-    TextField(value = myTextField,
-        onValueChange = { myTextField = it.toUpperCase() },
-        label = { Text(text = "This is the hint") })
-}
-
-@Composable
-fun MyTextField() {
-    var myTextField by rememberSaveable { mutableStateOf("") }
-    TextField(value = myTextField, onValueChange = { myTextField = it })
-}
-
-@Composable
 fun MyImage() {
     Image(
         painter = painterResource(id = R.drawable.ic_launcher_background),
@@ -156,26 +167,29 @@ fun MyProgressBar() {
         Modifier
             .fillMaxSize()
             .padding(24.dp),
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally) {
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         if (showLoader) {
             CircularProgressIndicator(color = Color.Red, strokeWidth = 4.dp)
             LinearProgressIndicator(modifier = Modifier.padding(top = 25.dp))
         }
         Spacer(modifier = Modifier.padding(10.dp))
-        Button(onClick = {showLoader = !showLoader}) {
+        Button(onClick = { showLoader = !showLoader }) {
             Text(text = "Show/hide")
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    JetpackComponentsExampleTheme {
-        //MyButtonsExample()
-        //MyImage()
-        //MyIcon()
-        MyProgressBar()
-    }
+fun MySwitch() {
+    var state by rememberSaveable { mutableStateOf(false) }
+
+    Switch(
+        checked = state, onCheckedChange = { state = !state }, colors = SwitchDefaults.colors(
+            uncheckedThumbColor = Color.Red,
+            checkedThumbColor = Color.Green,
+            uncheckedTrackColor = Color.Magenta
+        )
+    )
 }
