@@ -4,10 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
@@ -15,18 +18,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.deimos.jetpackcomponentsexample.ui.theme.JetpackComponentsExampleTheme
-import java.util.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +58,7 @@ fun MyText() {
         Text(text = "Cursive text", fontFamily = FontFamily.Cursive, fontSize = 25.sp)
         Text(text = "Text decoration", textDecoration = TextDecoration.Underline, fontSize = 25.sp)
         MyTextField()
-        MyTextFieldAdavanced()
+        MyTextFieldAdvanced()
         MyTextFieldOutlined()
     }
 }
@@ -116,7 +117,7 @@ fun MyButtonsExample() {
 }
 
 @Composable
-fun MyTextFieldAdavanced() {
+fun MyTextFieldAdvanced() {
     var myTextField by rememberSaveable { mutableStateOf("") }
     TextField(value = myTextField,
         onValueChange = { myTextField = it.toUpperCase() },
@@ -129,10 +130,28 @@ fun MyTextField() {
     TextField(value = myTextField, onValueChange = { myTextField = it })
 }
 
+@Composable
+fun MyImage() {
+    Image(
+        painter = painterResource(id = R.drawable.ic_launcher_background),
+        contentDescription = "Example",
+        modifier = Modifier
+            .clip(CircleShape)
+            .border(5.dp, Color.Red, CircleShape)
+    )
+}
+
+@Composable
+fun MyIcon() {
+    Icon(imageVector = Icons.Default.Star, contentDescription = "Example", tint = Color.Cyan)
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     JetpackComponentsExampleTheme {
-        MyButtonsExample()
+        //MyButtonsExample()
+        //MyImage()
+        MyIcon()
     }
 }
