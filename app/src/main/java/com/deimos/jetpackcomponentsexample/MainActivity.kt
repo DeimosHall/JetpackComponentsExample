@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    MyButtonsExample()
+                    MyProgressBar()
                 }
             }
         }
@@ -146,12 +146,36 @@ fun MyIcon() {
     Icon(imageVector = Icons.Default.Star, contentDescription = "Example", tint = Color.Cyan)
 }
 
+@Composable
+fun MyProgressBar() {
+    var showLoader by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally) {
+        if (showLoader) {
+            CircularProgressIndicator(color = Color.Red, strokeWidth = 4.dp)
+            LinearProgressIndicator(modifier = Modifier.padding(top = 25.dp))
+        }
+        Spacer(modifier = Modifier.padding(10.dp))
+        Button(onClick = {showLoader = !showLoader}) {
+            Text(text = "Show/hide")
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     JetpackComponentsExampleTheme {
         //MyButtonsExample()
         //MyImage()
-        MyIcon()
+        //MyIcon()
+        MyProgressBar()
     }
 }
