@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -56,7 +58,10 @@ class MainActivity : ComponentActivity() {
 
                     // Radio buttons
                     var radioSelected by rememberSaveable { mutableStateOf("Kotlin") }
-                    MyRadioButtons(name = radioSelected, onItemSelected = { radioSelected = it })
+                    //MyRadioButtons(name = radioSelected, onItemSelected = { radioSelected = it })
+
+                    // Card
+                    MyCard()
                 }
             }
         }
@@ -271,6 +276,25 @@ fun MyRadioButtons(name: String, onItemSelected: (String) -> Unit) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(selected = name == "C++", onClick = { onItemSelected("C++") })
             Text(text = "C++")
+        }
+    }
+}
+
+@Composable
+fun MyCard() {
+    Column {
+        Card(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+            elevation = 16.dp,
+            //shape = MaterialTheme.shapes.small
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(text = "Text 1")
+                Text(text = "Text 2")
+                Text(text = "Text 3")
+            }
         }
     }
 }
