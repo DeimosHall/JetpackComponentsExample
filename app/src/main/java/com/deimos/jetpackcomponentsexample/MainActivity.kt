@@ -40,7 +40,23 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    MyCheckBox()
+                    var status by rememberSaveable { mutableStateOf(false) }
+                    val checkInfo = CheckInfo(
+                        title = "Example 1",
+                        selected = status,
+                        onCheckedChange = { status = it })
+
+                    //MyCheckboxAdvanced(checkInfo = checkInfo)
+
+                    val myOptions = getOptions(listOf("Example 1", "Example 2", "Example 3"))
+                    /*
+                    Column() {
+                        myOptions.forEach { MyCheckboxAdvanced(checkInfo = it) }
+                    } */
+
+                    // Radio buttons
+                    var radioSelected by rememberSaveable { mutableStateOf("Kotlin") }
+                    MyRadioButtons(name = radioSelected, onItemSelected = { radioSelected = it })
                 }
             }
         }
@@ -210,6 +226,51 @@ fun MyCheckBox() {
                 text = AnnotatedString("My Checkbox"),
                 onClick = { state = !state }
             )
+        }
+    }
+}
+
+@Composable
+fun MyCheckboxAdvanced(checkInfo: CheckInfo) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Checkbox(
+            checked = checkInfo.selected,
+            onCheckedChange = { checkInfo.onCheckedChange(!checkInfo.selected) })
+        ClickableText(
+            text = AnnotatedString(checkInfo.title),
+            onClick = { checkInfo.onCheckedChange(!checkInfo.selected) })
+    }
+}
+
+@Composable
+fun getOptions(titles: List<String>): List<CheckInfo> {
+    return titles.map {
+        var status by rememberSaveable { mutableStateOf(false) }
+        CheckInfo(
+            title = it,
+            selected = status,
+            onCheckedChange = { status = it }
+        )
+    }
+}
+
+@Composable
+fun MyRadioButtons(name: String, onItemSelected: (String) -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = name == "Kotlin", onClick = { onItemSelected("Kotlin") })
+            Text(text = "Kotlin")
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = name == "Java", onClick = { onItemSelected("Java") })
+            Text(text = "Java")
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = name == "C++", onClick = { onItemSelected("C++") })
+            Text(text = "C++")
         }
     }
 }
