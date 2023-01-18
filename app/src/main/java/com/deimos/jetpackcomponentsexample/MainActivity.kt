@@ -61,7 +61,10 @@ class MainActivity : ComponentActivity() {
                     //MyRadioButtons(name = radioSelected, onItemSelected = { radioSelected = it })
 
                     // Card
-                    MyCard()
+                    //MyCard()
+
+                    // BadgeBox
+                    MyBadgeBox()
                 }
             }
         }
@@ -283,9 +286,10 @@ fun MyRadioButtons(name: String, onItemSelected: (String) -> Unit) {
 @Composable
 fun MyCard() {
     Column {
-        Card(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             elevation = 16.dp,
             //shape = MaterialTheme.shapes.small
             shape = RoundedCornerShape(16.dp)
@@ -295,6 +299,22 @@ fun MyCard() {
                 Text(text = "Text 2")
                 Text(text = "Text 3")
             }
+        }
+    }
+}
+
+@Composable
+fun MyBadgeBox() {
+    Box(modifier = Modifier.padding(16.dp)) {
+        BadgedBox(badge = {
+            Badge { Text(text = "1") }
+        }) {
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = "",
+                modifier = Modifier.size(32.dp),
+                tint = Color.Blue
+            )
         }
     }
 }
