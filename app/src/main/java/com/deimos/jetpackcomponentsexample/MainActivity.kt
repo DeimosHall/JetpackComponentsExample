@@ -3,9 +3,7 @@ package com.deimos.jetpackcomponentsexample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.deimos.jetpackcomponentsexample.ui.theme.JetpackComponentsExampleTheme
+import kotlin.math.exp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +66,12 @@ class MainActivity : ComponentActivity() {
                     //MyBadgeBox()
 
                     // Divider
+                    /*
                     Column(modifier = Modifier.fillMaxSize()) {
                         MyDivider()
-                    }
+                    } */
+
+                    MyDropDownMenu()
                 }
             }
         }
@@ -326,7 +328,49 @@ fun MyBadgeBox() {
 
 @Composable
 fun MyDivider() {
-    Divider(modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 16.dp))
+    Divider(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
+    )
+}
+
+@Composable
+fun MyDropDownMenu() {
+    var selectedText by rememberSaveable { mutableStateOf("") }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val desserts = listOf("Ice cream", "Coffee", "Chocolate")
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.Cyan)
+                .padding(16.dp)
+        ) {
+            OutlinedTextField(
+                value = selectedText,
+                onValueChange = { selectedText = it },
+                enabled = false,
+                readOnly = true,
+                modifier = Modifier
+                    .clickable { expanded = true }
+                .fillMaxWidth()
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                desserts.forEach { dessert ->
+                    DropdownMenuItem(onClick = {
+                        expanded = false
+                        selectedText = dessert
+                    }) {
+                        Text(text = dessert)
+                    }
+                }
+            }
+        }
+    }
 }
