@@ -64,7 +64,12 @@ class MainActivity : ComponentActivity() {
                     //MyCard()
 
                     // BadgeBox
-                    MyBadgeBox()
+                    //MyBadgeBox()
+
+                    // Divider
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        MyDivider()
+                    }
                 }
             }
         }
@@ -317,4 +322,11 @@ fun MyBadgeBox() {
             )
         }
     }
+}
+
+@Composable
+fun MyDivider() {
+    Divider(modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 16.dp))
 }
