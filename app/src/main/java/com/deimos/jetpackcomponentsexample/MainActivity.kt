@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                         MyDivider()
                     } */
 
-                    MyDropDownMenu()
+                    AdvancedSlider()
                 }
             }
         }
@@ -355,7 +355,7 @@ fun MyDropDownMenu() {
                 readOnly = true,
                 modifier = Modifier
                     .clickable { expanded = true }
-                .fillMaxWidth()
+                    .fillMaxWidth()
             )
             DropdownMenu(
                 expanded = expanded,
