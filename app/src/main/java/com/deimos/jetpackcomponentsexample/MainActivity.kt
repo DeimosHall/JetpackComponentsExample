@@ -92,13 +92,14 @@ fun DefaultPreview() {
 fun ShowDialog() {
     var show by rememberSaveable { mutableStateOf(false) }
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Button(onClick = {show = true}) {
+        Button(onClick = { show = true }) {
             Text(text = "Show")
         }
     }
     //MyAlertDialog(show = show, onCancel = {show = false}, onConfirm = {show = false})
     //MySimpleCustomDialog(show = show, onCancel = { show = false })
-    MyCustomDialog(show = show, onDismiss = { show = false })
+    //MyCustomDialog(show = show, onDismiss = { show = false })
+    MyConfirmationDialog(show = show, onDismiss = { show = false })
 }
 
 @Composable

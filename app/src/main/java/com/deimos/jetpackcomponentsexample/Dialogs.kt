@@ -5,11 +5,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,6 +23,33 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+
+@Composable
+fun MyConfirmationDialog(show: Boolean, onDismiss: () -> Unit) {
+    if (show) {
+        Dialog(onDismissRequest = { onDismiss() }) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.background)
+            ) {
+                MyTitle(text = "Phone ringtone")
+                Divider(modifier = Modifier.fillMaxWidth(), color = Color.LightGray)
+                var status by rememberSaveable { mutableStateOf("") }
+                MyRadioButtons(name = status, onItemSelected = { status = it })
+                Divider(modifier = Modifier.fillMaxWidth(), color = Color.LightGray)
+                Row(modifier = Modifier.align(Alignment.End)) {
+                    TextButton(onClick =  {}) {
+                        Text(text = "Cancel")
+                    }
+                    TextButton(onClick =  {}) {
+                        Text(text = "Ok")
+                    }
+                }
+            }
+        }
+    }
+}
 
 @Composable
 fun MyCustomDialog(show: Boolean, onDismiss: () -> Unit) {
