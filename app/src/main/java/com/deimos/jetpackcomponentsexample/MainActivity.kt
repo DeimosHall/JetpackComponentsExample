@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -30,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.deimos.jetpackcomponentsexample.ui.theme.JetpackComponentsExampleTheme
-import kotlin.math.exp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +69,8 @@ class MainActivity : ComponentActivity() {
                         MyDivider()
                     } */
 
-                    AdvancedSlider()
+                    //AdvancedSlider()
+                    ShowDialog()
                 }
             }
         }
@@ -87,6 +86,19 @@ fun DefaultPreview() {
         //MyIcon()
         MyProgressBar()
     }
+}
+
+@Composable
+fun ShowDialog() {
+    var show by rememberSaveable { mutableStateOf(false) }
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Button(onClick = {show = true}) {
+            Text(text = "Show")
+        }
+    }
+    //MyAlertDialog(show = show, onCancel = {show = false}, onConfirm = {show = false})
+    //MySimpleCustomDialog(show = show, onCancel = { show = false })
+    MyCustomDialog(show = show, onDismiss = { show = false })
 }
 
 @Composable
